@@ -1,7 +1,10 @@
+import { path } from "path";;
 const express = require("express");
 const cors = require("cors");
 const userRoutes = require("./routes/UserRoutes");
 const mongoose = require("mongoose");
+
+const _dirname = path.resolve();
 
 const app = express();
 
@@ -21,6 +24,12 @@ mongoose
   });
 
 app.use("/api/user", userRoutes);
+
+app.use(express.static(path.join(_dirname, '/netflix-ui/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(_dirname, 'netflix-ui', 'build', 'index.html'));
+})
 
 app.listen(5000, () => {
   console.log("server started on port 5000");

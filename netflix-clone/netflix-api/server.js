@@ -1,8 +1,9 @@
-import { path } from "path";;
+// import { path } from "path";
 const express = require("express");
 const cors = require("cors");
 const userRoutes = require("./routes/UserRoutes");
 const mongoose = require("mongoose");
+const path = require("path");
 
 const _dirname = path.resolve();
 

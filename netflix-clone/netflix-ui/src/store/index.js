@@ -5,7 +5,7 @@ import {
   } from "@reduxjs/toolkit";
   import axios from "axios";
   import { API_KEY, TMDB_BASE_URL } from "../utils/constants";
-  
+  const REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL;
   const initialState = {
     movies: [],
     genresLoaded: false,
@@ -81,7 +81,7 @@ import {
     async (email) => {
       const {
         data: { movies },
-      } = await axios.get(`http://localhost:5000/api/user/liked/${email}`);
+      } = await axios.get(`${REACT_APP_BACKEND_URL}api/user/liked/${email}`);
       return movies;
     }
   );
@@ -91,7 +91,7 @@ import {
     async ({ movieId, email }) => {
       const {
         data: { movies },
-      } = await axios.put("http://localhost:5000/api/user/remove", {
+      } = await axios.put(`${REACT_APP_BACKEND_URL}api/user/remove`, {
         email,
         movieId,
       });

@@ -3,7 +3,10 @@ const express = require("express");
 const cors = require("cors");
 const userRoutes = require("./routes/UserRoutes");
 const mongoose = require("mongoose");
+// const { MongoClient, ServerApiVersion } = require('mongodb');
+
 const path = require("path");
+const MongoDB_URI = process.env.MongoDB_URI;
 
 const _dirname = path.resolve();
 
@@ -12,8 +15,28 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+// const client = new MongoClient(MongoDB_URI, {
+//   serverApi: {
+//     version: ServerApiVersion.v1,
+//     strict: true,
+//     deprecationErrors: true,
+//   }
+// });
+
+// async function run() {
+//   try {
+//     await client.connect();
+//     await client.db("admin").command({ ping: 1 });
+//     console.log("Pinged your deployment. You successfully connected to MongoDB!");
+//   } finally {
+//     await client.close();
+//   }
+// }
+// run().catch(console.dir);
+
 mongoose
-  .connect("mongodb://localhost:27017/netflix", {
+  .connect(MongoDB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -35,31 +58,3 @@ app.get('*', (req, res) => {
 app.listen(5000, () => {
   console.log("server started on port 5000");
 });
-
-
-
-// const { MongoClient, ServerApiVersion } = require('mongodb');
-// const uri = "mongodb+srv://sakshi12:1234567890@cluster0.um2qycn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-// // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-// const client = new MongoClient(uri, {
-//   serverApi: {
-//     version: ServerApiVersion.v1,
-//     strict: true,
-//     deprecationErrors: true,
-//   }
-// });
-
-// async function run() {
-//   try {
-//     // Connect the client to the server	(optional starting in v4.7)
-//     await client.connect();
-//     // Send a ping to confirm a successful connection
-//     await client.db("admin").command({ ping: 1 });
-//     console.log("Pinged your deployment. You successfully connected to MongoDB!");
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await client.close();
-//   }
-// }
-// run().catch(console.dir);
